@@ -2,29 +2,25 @@ import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
 
 @Injectable()
-export class GenresService {
+export class BandsService {
   client: AxiosInstance;
 
   constructor() {
     this.client = axios.create({
-      baseURL: 'http://localhost:3001/v1/genres',
+      baseURL: 'http://localhost:3003/v1/bands',
     });
   }
 
   async create(
     name: string,
-    description: string,
-    country: string,
-    year: number,
+    origin: string,
+    members: any[],
+    website: string,
+    genresIds: string[],
   ) {
     const res = await this.client.post(
       '/',
-      {
-        name,
-        description,
-        country,
-        year,
-      },
+      { name, origin, members, website, genresIds },
       {
         headers: {
           Authorization: process.env.token || '',
@@ -48,25 +44,20 @@ export class GenresService {
   async update(
     id: string,
     name: string,
-    description: string,
-    country: string,
-    year: number,
+    origin: string,
+    members: any[],
+    website: string,
+    genresIds: string[],
   ) {
     const res = await this.client.put(
       `/${id}`,
-      {
-        name,
-        description,
-        country,
-        year,
-      },
+      { name, origin, members, website, genresIds },
       {
         headers: {
           Authorization: process.env.token || '',
         },
       },
     );
-
     return res.data;
   }
 
@@ -76,7 +67,6 @@ export class GenresService {
         Authorization: process.env.token || '',
       },
     });
-
     return res.data;
   }
 }

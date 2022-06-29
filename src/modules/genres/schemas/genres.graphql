@@ -13,14 +13,14 @@ type Genres {
   total: Int
 }
 
-type Query {
-  genres: Genres
-  genre(id: String!): Genre
-}
-
 type DEL {
   acknowledged: Boolean
   deletedCount: Int
+}
+
+type Query {
+  genres: Genres
+  genre(id: String!): Genre
 }
 
 type Mutation {
