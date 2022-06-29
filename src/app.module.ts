@@ -17,9 +17,15 @@ import { ArtistsModule } from './modules/artists/artists.module';
         outputAs: 'class',
       },
       context: ({ req }) => {
-        const token = req.headers.authorization || '';
-        process.env.token = token;
-        return { token };
+        const token: string = req.headers.authorization || '';
+        // process.env.token = token;
+        return {
+          params: {
+            headers: {
+              Authorization: token,
+            },
+          },
+        };
       },
     }),
     UsersModule,

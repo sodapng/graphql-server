@@ -1,4 +1,5 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
+import { IContext } from 'src/types';
 import { BandsService } from '../services/bands.service';
 
 @Resolver('Band')
@@ -12,8 +13,18 @@ export class BandsResolver {
     @Args('members') members: any[],
     @Args('website') website: string,
     @Args('genresIds') genresIds: string[],
+    @Context() req: IContext,
   ) {
-    return this.bandsService.create(name, origin, members, website, genresIds);
+    const { params } = req;
+
+    return this.bandsService.create(
+      name,
+      origin,
+      members,
+      website,
+      genresIds,
+      params,
+    );
   }
 
   @Query('bands')
@@ -37,7 +48,10 @@ export class BandsResolver {
     @Args('members') members: any[],
     @Args('website') website: string,
     @Args('genresIds') genresIds: string[],
+    @Context() req: IContext,
   ) {
+    const { params } = req;
+
     return this.bandsService.update(
       id,
       name,
@@ -45,11 +59,13 @@ export class BandsResolver {
       members,
       website,
       genresIds,
+      params,
     );
   }
 
   @Mutation('deleteBand')
-  remove(@Args('id') id: string) {
-    return this.bandsService.remove(id);
+  remove(@Args('id') id: string, @Context() req: IContext) {
+    const { params } = req;
+    return this.bandsService.remove(id, params);
   }
 }

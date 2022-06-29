@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
+import { IContext } from 'src/types';
 
 @Injectable()
 export class ArtistsService {
@@ -7,7 +8,12 @@ export class ArtistsService {
 
   constructor() {
     this.client = axios.create({
-      baseURL: 'http://localhost:3002/v1/artists',
+      baseURL: 'https://localhost:3002/v1/artists',
+    });
+
+    this.client.interceptors.response.use((res) => {
+      res.data.items = res.data.items?.map((el) => ({ ...el, id: el._id }));
+      return res;
     });
   }
 
@@ -20,6 +26,7 @@ export class ArtistsService {
     country: string,
     bands: string[],
     instruments: string[],
+    params: IContext['params'],
   ) {
     const res = await this.client.post(
       '/',
@@ -33,11 +40,7 @@ export class ArtistsService {
         bands,
         instruments,
       },
-      {
-        headers: {
-          Authorization: process.env.token || '',
-        },
-      },
+      params,
     );
 
     return res.data;
@@ -69,6 +72,7 @@ export class ArtistsService {
     country: string,
     bands: string[],
     instruments: string[],
+    params: IContext['params'],
   ) {
     const res = await this.client.put(
       `/${id}`,
@@ -82,22 +86,14 @@ export class ArtistsService {
         bands,
         instruments,
       },
-      {
-        headers: {
-          Authorization: process.env.token || '',
-        },
-      },
+      params,
     );
 
     return res.data;
   }
 
-  async remove(id: string) {
-    const res = await this.client.delete(`/${id}`, {
-      headers: {
-        Authorization: process.env.token || '',
-      },
-    });
+  async remove(id: string, params: IContext['params']) {
+    const res = await this.client.delete(`/${id}`, params);
     return res.data;
   }
 }
