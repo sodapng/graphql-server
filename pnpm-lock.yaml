@@ -8,6 +8,7 @@ specifiers:
   '@nestjs/graphql': ^10.0.16
   '@nestjs/jwt': ^8.0.1
   '@nestjs/mapped-types': ^1.0.1
+  '@nestjs/passport': ^8.2.2
   '@nestjs/platform-express': ^8.0.0
   '@nestjs/schematics': ^8.0.0
   '@nestjs/testing': ^8.0.0
@@ -45,6 +46,7 @@ dependencies:
   '@nestjs/graphql': 10.0.16_pleqsec7jzrijcjsyaminuqjyu
   '@nestjs/jwt': 8.0.1_@nestjs+common@8.4.7
   '@nestjs/mapped-types': 1.0.1_tqvmdvrjo4ghzq2yoilcfekhea
+  '@nestjs/passport': 8.2.2_ajebcnomotz225cztrmzhvaeiq
   '@nestjs/platform-express': 8.4.7_7tsmhnugyerf5okgqzer2mfqme
   apollo-server-express: 3.9.0_g7snex6epo2tsaz6yhvyva23iq
   axios: 0.27.2
@@ -1180,6 +1182,16 @@ packages:
     dependencies:
       '@nestjs/common': 8.4.7_47vcjb2de6lyibr6g4enoa5lyu
       reflect-metadata: 0.1.13
+    dev: false
+
+  /@nestjs/passport/8.2.2_ajebcnomotz225cztrmzhvaeiq:
+    resolution: {integrity: sha512-Ytbn8j7WZ4INmEntOpdJY1isTgdQqZkx5ADz8zsZ5wAp0t8tc5GF/A+GlXlmn9/yRPwZHSbmHpv7Qt2EIiNnrw==}
+    peerDependencies:
+      '@nestjs/common': ^6.0.0 || ^7.0.0 || ^8.0.0
+      passport: ^0.4.0 || ^0.5.0 || ^0.6.0
+    dependencies:
+      '@nestjs/common': 8.4.7_47vcjb2de6lyibr6g4enoa5lyu
+      passport: 0.6.0
     dev: false
 
   /@nestjs/platform-express/8.4.7_7tsmhnugyerf5okgqzer2mfqme:
@@ -4415,6 +4427,15 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: false
 
+  /passport/0.6.0:
+    resolution: {integrity: sha512-0fe+p3ZnrWRW74fe8+SvCyf4a3Pb2/h7gFkQ8yTJpAO50gDzlfjZUZTO1k5Eg9kUct22OxHLqDZoKUWRHOh9ug==}
+    engines: {node: '>= 0.4.0'}
+    dependencies:
+      passport-strategy: 1.0.0
+      pause: 0.0.1
+      utils-merge: 1.0.1
+    dev: false
+
   /path-browserify/1.0.1:
     resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
 
@@ -4446,6 +4467,10 @@ packages:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
     dev: true
+
+  /pause/0.0.1:
+    resolution: {integrity: sha512-KG8UEiEVkR3wGEb4m5yZkVCzigAD+cVEJck2CzYZO37ZGJfctvVptVO192MwrtPhzONn6go8ylnOdMhKqi4nfg==}
+    dev: false
 
   /picocolors/1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
