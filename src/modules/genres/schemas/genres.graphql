@@ -1,41 +1,29 @@
 type Genre {
-  _id: ID!
+  id: ID!
   name: String
   description: String
   country: String
   year: Int
 }
 
-type Genres {
-  items: [Genre]
-  limit: Int
-  offset: Int
-  total: Int
-}
-
-type DEL {
-  acknowledged: Boolean
-  deletedCount: Int
-}
-
 type Query {
-  genres: Genres
-  genre(id: String!): Genre
+  genres(limit: Int, offset: Int): [Genre]
+  genre(id: ID!): Genre
 }
 
 type Mutation {
   createGenre(
     name: String!
-    description: String!
-    country: String!
-    year: Int!
+    description: String
+    country: String
+    year: Int
   ): Genre!
   updateGenre(
-    id: String!
+    id: ID!
     name: String
     description: String
     country: String
     year: Int
-  ): Genre
-  deleteGenre(id: String!): DEL
+  ): Genre!
+  deleteGenre(id: ID!): Delete
 }

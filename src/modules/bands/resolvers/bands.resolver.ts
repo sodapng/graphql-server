@@ -17,8 +17,11 @@ export class BandsResolver {
   }
 
   @Query('bands')
-  findAll() {
-    return this.bandsService.findAll();
+  findAll(
+    @Args('limit', { defaultValue: 5 }) limit: number,
+    @Args('offset', { defaultValue: 0 }) offset: number,
+  ) {
+    return this.bandsService.findAll(limit, offset);
   }
 
   @Query('band')

@@ -35,8 +35,14 @@ export class GenresService {
     return res.data;
   }
 
-  async findAll() {
-    const res = await this.client.get('/');
+  async findAll(limit: number, offset: number) {
+    const res = await this.client.get('/', {
+      params: {
+        limit,
+        offset,
+      },
+    });
+
     return res.data;
   }
 

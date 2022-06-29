@@ -16,8 +16,11 @@ export class GenresResolver {
   }
 
   @Query('genres')
-  findAll() {
-    return this.genresService.findAll();
+  findAll(
+    @Args('limit', { defaultValue: 5 }) limit: number,
+    @Args('offset', { defaultValue: 0 }) offset: number,
+  ) {
+    return this.genresService.findAll(limit, offset);
   }
 
   @Query('genre')

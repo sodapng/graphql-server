@@ -17,7 +17,7 @@ export class UsersService {
   }
 
   async getById(id: string) {
-    const res = await this.client.get(id);
+    const res = await this.client.get(`/${id}`);
     return res.data;
   }
 

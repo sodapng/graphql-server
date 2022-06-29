@@ -2,25 +2,37 @@ import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
 
 @Injectable()
-export class BandsService {
+export class ArtistsService {
   client: AxiosInstance;
 
   constructor() {
     this.client = axios.create({
-      baseURL: 'http://localhost:3003/v1/bands',
+      baseURL: 'http://localhost:3002/v1/artists',
     });
   }
 
   async create(
-    name: string,
-    origin: string,
-    members: any[],
-    website: string,
-    genresIds: string[],
+    firstName: string,
+    secondName: string,
+    middleName: string,
+    birthDate: string,
+    birthPlace: string,
+    country: string,
+    bands: string[],
+    instruments: string[],
   ) {
     const res = await this.client.post(
       '/',
-      { name, origin, members, website, genresIds },
+      {
+        firstName,
+        secondName,
+        middleName,
+        birthDate,
+        birthPlace,
+        country,
+        bands,
+        instruments,
+      },
       {
         headers: {
           Authorization: process.env.token || '',
@@ -38,6 +50,7 @@ export class BandsService {
         offset,
       },
     });
+
     return res.data.items;
   }
 
@@ -48,21 +61,34 @@ export class BandsService {
 
   async update(
     id: string,
-    name: string,
-    origin: string,
-    members: any[],
-    website: string,
-    genresIds: string[],
+    firstName: string,
+    secondName: string,
+    middleName: string,
+    birthDate: string,
+    birthPlace: string,
+    country: string,
+    bands: string[],
+    instruments: string[],
   ) {
     const res = await this.client.put(
       `/${id}`,
-      { name, origin, members, website, genresIds },
+      {
+        firstName,
+        secondName,
+        middleName,
+        birthDate,
+        birthPlace,
+        country,
+        bands,
+        instruments,
+      },
       {
         headers: {
           Authorization: process.env.token || '',
         },
       },
     );
+
     return res.data;
   }
 

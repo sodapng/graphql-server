@@ -7,40 +7,34 @@
 
 /* tslint:disable */
 /* eslint-disable */
-export class InputMember {
+export class MemberInput {
     artist?: Nullable<string>;
     instrument?: Nullable<string>;
     years?: Nullable<string>;
 }
 
-export class Band {
-    _id: string;
-    name?: Nullable<string>;
-    origin?: Nullable<string>;
-    members?: Nullable<Nullable<Member>[]>;
-    website?: Nullable<string>;
-    genres?: Nullable<string>;
-}
-
-export class Bands {
-    items?: Nullable<Nullable<Band>[]>;
-    limit?: Nullable<number>;
-    offset?: Nullable<number>;
-    total?: Nullable<number>;
-}
-
-export class Member {
-    artist?: Nullable<string>;
-    instrument?: Nullable<string>;
-    years?: Nullable<string>;
+export class Artist {
+    id: string;
+    firstName?: Nullable<string>;
+    secondName?: Nullable<string>;
+    middleName?: Nullable<string>;
+    birthDate?: Nullable<string>;
+    birthPlace?: Nullable<string>;
+    country?: Nullable<string>;
+    bands?: Nullable<Nullable<string>[]>;
+    instruments?: Nullable<string>;
 }
 
 export abstract class IQuery {
-    abstract bands(): Bands | Promise<Bands>;
+    abstract artists(limit?: Nullable<number>, offset?: Nullable<number>): Nullable<Nullable<Artist>[]> | Promise<Nullable<Nullable<Artist>[]>>;
+
+    abstract artist(id: string): Nullable<Artist> | Promise<Nullable<Artist>>;
+
+    abstract bands(limit?: Nullable<number>, offset?: Nullable<number>): Nullable<Nullable<Band>[]> | Promise<Nullable<Nullable<Band>[]>>;
 
     abstract band(id: string): Nullable<Band> | Promise<Nullable<Band>>;
 
-    abstract genres(): Nullable<Genres> | Promise<Nullable<Genres>>;
+    abstract genres(limit?: Nullable<number>, offset?: Nullable<number>): Nullable<Nullable<Genre>[]> | Promise<Nullable<Nullable<Genre>[]>>;
 
     abstract genre(id: string): Nullable<Genre> | Promise<Nullable<Genre>>;
 
@@ -50,43 +44,52 @@ export abstract class IQuery {
 }
 
 export abstract class IMutation {
-    abstract createBand(name: string, origin?: Nullable<string>, members?: Nullable<Nullable<InputMember>[]>, website?: Nullable<string>, genresIds?: Nullable<Nullable<string>[]>): Band | Promise<Band>;
+    abstract createArtist(firstName: string, secondName: string, middleName?: Nullable<string>, birthDate?: Nullable<string>, birthPlace?: Nullable<string>, country?: Nullable<string>, bands?: Nullable<Nullable<string>[]>, instruments?: Nullable<Nullable<string>[]>): Artist | Promise<Artist>;
 
-    abstract updateBand(id: string, name?: Nullable<string>, origin?: Nullable<string>, members?: Nullable<Nullable<InputMember>[]>, website?: Nullable<string>, genresIds?: Nullable<Nullable<string>[]>): Band | Promise<Band>;
+    abstract updateArtist(id: string, firstName?: Nullable<string>, secondName?: Nullable<string>, middleName?: Nullable<string>, birthDate?: Nullable<string>, birthPlace?: Nullable<string>, country?: Nullable<string>, bands?: Nullable<Nullable<string>[]>, instruments?: Nullable<Nullable<string>[]>): Artist | Promise<Artist>;
 
-    abstract deleteBand(id: string): Nullable<DEL> | Promise<Nullable<DEL>>;
+    abstract deleteArtist(id: string): Nullable<Delete> | Promise<Nullable<Delete>>;
 
-    abstract createGenre(name: string, description: string, country: string, year: number): Genre | Promise<Genre>;
+    abstract createBand(name: string, origin?: Nullable<string>, members?: Nullable<Nullable<MemberInput>[]>, website?: Nullable<string>, genresIds?: Nullable<Nullable<string>[]>): Band | Promise<Band>;
 
-    abstract updateGenre(id: string, name?: Nullable<string>, description?: Nullable<string>, country?: Nullable<string>, year?: Nullable<number>): Nullable<Genre> | Promise<Nullable<Genre>>;
+    abstract updateBand(id: string, name?: Nullable<string>, origin?: Nullable<string>, members?: Nullable<Nullable<MemberInput>[]>, website?: Nullable<string>, genresIds?: Nullable<Nullable<string>[]>): Band | Promise<Band>;
 
-    abstract deleteGenre(id: string): Nullable<DEL> | Promise<Nullable<DEL>>;
+    abstract deleteBand(id: string): Nullable<Delete> | Promise<Nullable<Delete>>;
 
-    abstract register(firstName: string, lastName: string, password: string, email: string): Nullable<User> | Promise<Nullable<User>>;
+    abstract createGenre(name: string, description?: Nullable<string>, country?: Nullable<string>, year?: Nullable<number>): Genre | Promise<Genre>;
+
+    abstract updateGenre(id: string, name?: Nullable<string>, description?: Nullable<string>, country?: Nullable<string>, year?: Nullable<number>): Genre | Promise<Genre>;
+
+    abstract deleteGenre(id: string): Nullable<Delete> | Promise<Nullable<Delete>>;
+
+    abstract register(firstName: string, lastName: string, password: string, email: string): User | Promise<User>;
+}
+
+export class Band {
+    id: string;
+    name?: Nullable<string>;
+    origin?: Nullable<string>;
+    members?: Nullable<Nullable<Member>[]>;
+    website?: Nullable<string>;
+    genres?: Nullable<string>;
+}
+
+export class Member {
+    artist?: Nullable<string>;
+    instrument?: Nullable<string>;
+    years?: Nullable<string>;
 }
 
 export class Genre {
-    _id: string;
+    id: string;
     name?: Nullable<string>;
     description?: Nullable<string>;
     country?: Nullable<string>;
     year?: Nullable<number>;
 }
 
-export class Genres {
-    items?: Nullable<Nullable<Genre>[]>;
-    limit?: Nullable<number>;
-    offset?: Nullable<number>;
-    total?: Nullable<number>;
-}
-
-export class DEL {
-    acknowledged?: Nullable<boolean>;
-    deletedCount?: Nullable<number>;
-}
-
 export class User {
-    _id: string;
+    id: string;
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
     password: string;
@@ -94,7 +97,12 @@ export class User {
 }
 
 export class JWT {
-    jwt: string;
+    jwt?: Nullable<string>;
+}
+
+export class Delete {
+    acknowledged?: Nullable<boolean>;
+    deletedCount?: Nullable<number>;
 }
 
 type Nullable<T> = T | null;
