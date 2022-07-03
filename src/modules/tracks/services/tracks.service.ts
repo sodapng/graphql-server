@@ -1,36 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
+import { CreateTrackInput, UpdateTrackInput } from 'src/graphql';
 import { IContext } from 'src/types';
 
 @Injectable()
-export class BandsService {
+export class TracksService {
   client: AxiosInstance;
 
   constructor() {
     this.client = axios.create({
-      baseURL: 'http://localhost:3003/v1/bands',
-    });
-
-    this.client.interceptors.response.use((res) => {
-      res.data.items = res.data.items?.map((el) => ({ ...el, id: el._id }));
-      return res;
+      baseURL:
+        'https://3006-rollingscop-nodegraphql-hegnmr5cj7d.ws-eu51.gitpod.io/v1/tracks',
     });
   }
 
-  async create(
-    name: string,
-    origin: string,
-    members: any[],
-    website: string,
-    genresIds: string[],
-    config: IContext['config'],
-  ) {
-    const res = await this.client.post(
-      '/',
-      { name, origin, members, website, genresIds },
-      config,
-    );
-
+  async create(createTrackInput: CreateTrackInput, config: IContext['config']) {
+    const res = await this.client.post('/', createTrackInput, config);
     return res.data;
   }
 
@@ -38,6 +23,7 @@ export class BandsService {
     const res = await this.client.get('/', {
       params: { limit, offset },
     });
+
     return res.data.items;
   }
 
@@ -48,18 +34,10 @@ export class BandsService {
 
   async update(
     id: string,
-    name: string,
-    origin: string,
-    members: any[],
-    website: string,
-    genresIds: string[],
+    updateTrackInput: UpdateTrackInput,
     config: IContext['config'],
   ) {
-    const res = await this.client.put(
-      `/${id}`,
-      { name, origin, members, website, genresIds },
-      config,
-    );
+    const res = await this.client.put(`/${id}`, updateTrackInput, config);
     return res.data;
   }
 

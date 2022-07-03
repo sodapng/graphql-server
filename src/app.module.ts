@@ -6,6 +6,8 @@ import { UsersModule } from './modules/users/users.module';
 import { GenresModule } from './modules/genres/genres.module';
 import { BandsModule } from './modules/bands/bands.module';
 import { ArtistsModule } from './modules/artists/artists.module';
+import { TracksModule } from './modules/tracks/tracks.module';
+import axios from 'axios';
 
 @Module({
   imports: [
@@ -18,9 +20,9 @@ import { ArtistsModule } from './modules/artists/artists.module';
       },
       context: ({ req }) => {
         const token: string = req.headers.authorization || '';
-        // process.env.token = token;
+
         return {
-          params: {
+          config: {
             headers: {
               Authorization: token,
             },
@@ -32,6 +34,7 @@ import { ArtistsModule } from './modules/artists/artists.module';
     GenresModule,
     BandsModule,
     ArtistsModule,
+    TracksModule,
   ],
 })
 export class AppModule {}

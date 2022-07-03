@@ -1,5 +1,5 @@
 export interface IContext {
-  params: {
+  config: {
     headers: {
       Authorization: string;
     };

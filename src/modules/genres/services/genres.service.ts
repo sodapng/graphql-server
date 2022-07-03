@@ -22,7 +22,7 @@ export class GenresService {
     description: string,
     country: string,
     year: number,
-    params: IContext['params'],
+    config: IContext['config'],
   ) {
     const res = await this.client.post(
       '/',
@@ -32,7 +32,7 @@ export class GenresService {
         country,
         year,
       },
-      params,
+      config,
     );
 
     return res.data;
@@ -40,10 +40,7 @@ export class GenresService {
 
   async findAll(limit: number, offset: number) {
     const res = await this.client.get('/', {
-      params: {
-        limit,
-        offset,
-      },
+      params: { limit, offset },
     });
 
     return res.data;
@@ -60,7 +57,7 @@ export class GenresService {
     description: string,
     country: string,
     year: number,
-    params: IContext['params'],
+    config: IContext['config'],
   ) {
     const res = await this.client.put(
       `/${id}`,
@@ -70,15 +67,14 @@ export class GenresService {
         country,
         year,
       },
-      params,
+      config,
     );
 
     return res.data;
   }
 
-  async remove(id: string, params: IContext['params']) {
-    const res = await this.client.delete(`/${id}`, params);
-
+  async remove(id: string, config: IContext['config']) {
+    const res = await this.client.delete(`/${id}`, config);
     return res.data;
   }
 }

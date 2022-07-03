@@ -16,9 +16,9 @@ export class ArtistsResolver {
     @Args('country') country: string,
     @Args('bands') bands: string[],
     @Args('instruments') instruments: string[],
-    @Context() req: IContext,
+    @Context() ctx: IContext,
   ) {
-    const { params } = req;
+    const { config } = ctx;
 
     return this.artistsService.create(
       firstName,
@@ -29,7 +29,7 @@ export class ArtistsResolver {
       country,
       bands,
       instruments,
-      params,
+      config,
     );
   }
 
@@ -57,9 +57,9 @@ export class ArtistsResolver {
     @Args('country') country: string,
     @Args('bands') bands: string[],
     @Args('instruments') instruments: string[],
-    @Context() req: IContext,
+    @Context() ctx: IContext,
   ) {
-    const { params } = req;
+    const { config } = ctx;
 
     return this.artistsService.update(
       id,
@@ -71,13 +71,13 @@ export class ArtistsResolver {
       country,
       bands,
       instruments,
-      params,
+      config,
     );
   }
 
   @Mutation('deleteArtist')
-  remove(@Args('id') id: string, @Context() req: IContext) {
-    const { params } = req;
-    return this.artistsService.remove(id, params);
+  remove(@Args('id') id: string, @Context() ctx: IContext) {
+    const { config } = ctx;
+    return this.artistsService.remove(id, config);
   }
 }

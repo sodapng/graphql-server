@@ -26,7 +26,7 @@ export class ArtistsService {
     country: string,
     bands: string[],
     instruments: string[],
-    params: IContext['params'],
+    config: IContext['config'],
   ) {
     const res = await this.client.post(
       '/',
@@ -40,7 +40,7 @@ export class ArtistsService {
         bands,
         instruments,
       },
-      params,
+      config,
     );
 
     return res.data;
@@ -48,10 +48,7 @@ export class ArtistsService {
 
   async findAll(limit: number, offset: number) {
     const res = await this.client.get('/', {
-      params: {
-        limit,
-        offset,
-      },
+      params: { limit, offset },
     });
 
     return res.data.items;
@@ -72,7 +69,7 @@ export class ArtistsService {
     country: string,
     bands: string[],
     instruments: string[],
-    params: IContext['params'],
+    config: IContext['config'],
   ) {
     const res = await this.client.put(
       `/${id}`,
@@ -86,14 +83,14 @@ export class ArtistsService {
         bands,
         instruments,
       },
-      params,
+      config,
     );
 
     return res.data;
   }
 
-  async remove(id: string, params: IContext['params']) {
-    const res = await this.client.delete(`/${id}`, params);
+  async remove(id: string, config: IContext['config']) {
+    const res = await this.client.delete(`/${id}`, config);
     return res.data;
   }
 }

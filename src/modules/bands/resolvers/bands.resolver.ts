@@ -13,9 +13,9 @@ export class BandsResolver {
     @Args('members') members: any[],
     @Args('website') website: string,
     @Args('genresIds') genresIds: string[],
-    @Context() req: IContext,
+    @Context() ctx: IContext,
   ) {
-    const { params } = req;
+    const { config } = ctx;
 
     return this.bandsService.create(
       name,
@@ -23,7 +23,7 @@ export class BandsResolver {
       members,
       website,
       genresIds,
-      params,
+      config,
     );
   }
 
@@ -48,9 +48,9 @@ export class BandsResolver {
     @Args('members') members: any[],
     @Args('website') website: string,
     @Args('genresIds') genresIds: string[],
-    @Context() req: IContext,
+    @Context() ctx: IContext,
   ) {
-    const { params } = req;
+    const { config } = ctx;
 
     return this.bandsService.update(
       id,
@@ -59,13 +59,13 @@ export class BandsResolver {
       members,
       website,
       genresIds,
-      params,
+      config,
     );
   }
 
   @Mutation('deleteBand')
-  remove(@Args('id') id: string, @Context() req: IContext) {
-    const { params } = req;
-    return this.bandsService.remove(id, params);
+  remove(@Args('id') id: string, @Context() ctx: IContext) {
+    const { config } = ctx;
+    return this.bandsService.remove(id, config);
   }
 }

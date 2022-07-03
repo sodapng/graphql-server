@@ -12,10 +12,10 @@ export class GenresResolver {
     @Args('description') description: string,
     @Args('country') country: string,
     @Args('year') year: number,
-    @Context() req: IContext,
+    @Context() ctx: IContext,
   ) {
-    const { params } = req;
-    return this.genresService.create(name, description, country, year, params);
+    const { config } = ctx;
+    return this.genresService.create(name, description, country, year, config);
   }
 
   @Query('genres')
@@ -38,22 +38,22 @@ export class GenresResolver {
     @Args('description') description: string,
     @Args('country') country: string,
     @Args('year') year: number,
-    @Context() req: IContext,
+    @Context() ctx: IContext,
   ) {
-    const { params } = req;
+    const { config } = ctx;
     return this.genresService.update(
       id,
       name,
       description,
       country,
       year,
-      params,
+      config,
     );
   }
 
   @Mutation('deleteGenre')
-  remove(@Args('id') id: string, @Context() req: IContext) {
-    const { params } = req;
-    return this.genresService.remove(id, params);
+  remove(@Args('id') id: string, @Context() ctx: IContext) {
+    const { config } = ctx;
+    return this.genresService.remove(id, config);
   }
 }
