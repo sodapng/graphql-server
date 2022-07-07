@@ -1,4 +1,13 @@
-import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Context,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
+import { Band, CreateBandInput, UpdateBandInput } from 'src/graphql';
 import { IContext } from 'src/types';
 import { BandsService } from '../services/bands.service';
 
@@ -6,25 +15,19 @@ import { BandsService } from '../services/bands.service';
 export class BandsResolver {
   constructor(private readonly bandsService: BandsService) {}
 
+  @Resolver()
+  @ResolveField()
+  async genres(@Parent() band: Band) {
+    console.log(band);
+  }
+
   @Mutation('createBand')
   create(
-    @Args('name') name: string,
-    @Args('origin') origin: string,
-    @Args('members') members: any[],
-    @Args('website') website: string,
-    @Args('genresIds') genresIds: string[],
+    @Args('createBandInput') createBandInput: CreateBandInput,
     @Context() ctx: IContext,
   ) {
     const { config } = ctx;
-
-    return this.bandsService.create(
-      name,
-      origin,
-      members,
-      website,
-      genresIds,
-      config,
-    );
+    return this.bandsService.create(createBandInput, config);
   }
 
   @Query('bands')
@@ -43,24 +46,11 @@ export class BandsResolver {
   @Mutation('updateBand')
   update(
     @Args('id') id: string,
-    @Args('name') name: string,
-    @Args('origin') origin: string,
-    @Args('members') members: any[],
-    @Args('website') website: string,
-    @Args('genresIds') genresIds: string[],
+    @Args('updateBandInput') updateBandInput: UpdateBandInput,
     @Context() ctx: IContext,
   ) {
     const { config } = ctx;
-
-    return this.bandsService.update(
-      id,
-      name,
-      origin,
-      members,
-      website,
-      genresIds,
-      config,
-    );
+    return this.bandsService.update(id, updateBandInput, config);
   }
 
   @Mutation('deleteBand')

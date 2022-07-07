@@ -12,6 +12,11 @@ export class TracksService {
       baseURL:
         'https://3006-rollingscop-nodegraphql-hegnmr5cj7d.ws-eu51.gitpod.io/v1/tracks',
     });
+
+    this.client.interceptors.response.use((res) => {
+      res.data.items = res.data.items?.map((el) => ({ ...el, id: el._id }));
+      return res;
+    });
   }
 
   async create(createTrackInput: CreateTrackInput, config: IContext['config']) {

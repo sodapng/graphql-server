@@ -1,4 +1,5 @@
 import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
+import { CreateArtistInput, UpdateArtistInput } from 'src/graphql';
 import { IContext } from 'src/types';
 import { ArtistsService } from '../services/artists.service';
 
@@ -8,29 +9,12 @@ export class ArtistsResolver {
 
   @Mutation('createArtist')
   create(
-    @Args('firstName') firstName: string,
-    @Args('secondName') secondName: string,
-    @Args('middleName') middleName: string,
-    @Args('birthDate') birthDate: string,
-    @Args('birthPlace') birthPlace: string,
-    @Args('country') country: string,
-    @Args('bands') bands: string[],
-    @Args('instruments') instruments: string[],
+    @Args('createArtistInput') createArtistInput: CreateArtistInput,
     @Context() ctx: IContext,
   ) {
     const { config } = ctx;
 
-    return this.artistsService.create(
-      firstName,
-      secondName,
-      middleName,
-      birthDate,
-      birthPlace,
-      country,
-      bands,
-      instruments,
-      config,
-    );
+    return this.artistsService.create(createArtistInput, config);
   }
 
   @Query('artists')
@@ -49,30 +33,12 @@ export class ArtistsResolver {
   @Mutation('updateArtist')
   update(
     @Args('id') id: string,
-    @Args('firstName') firstName: string,
-    @Args('secondName') secondName: string,
-    @Args('middleName') middleName: string,
-    @Args('birthDate') birthDate: string,
-    @Args('birthPlace') birthPlace: string,
-    @Args('country') country: string,
-    @Args('bands') bands: string[],
-    @Args('instruments') instruments: string[],
+    @Args('updateArtistInput') updateArtistInput: UpdateArtistInput,
     @Context() ctx: IContext,
   ) {
     const { config } = ctx;
 
-    return this.artistsService.update(
-      id,
-      firstName,
-      secondName,
-      middleName,
-      birthDate,
-      birthPlace,
-      country,
-      bands,
-      instruments,
-      config,
-    );
+    return this.artistsService.update(id, updateArtistInput, config);
   }
 
   @Mutation('deleteArtist')

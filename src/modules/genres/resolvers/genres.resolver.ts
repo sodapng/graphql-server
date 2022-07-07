@@ -1,4 +1,5 @@
 import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
+import { CreateGenreInput, UpdateGenreInput } from 'src/graphql';
 import { IContext } from 'src/types';
 import { GenresService } from '../services/genres.service';
 
@@ -8,14 +9,11 @@ export class GenresResolver {
 
   @Mutation('createGenre')
   create(
-    @Args('name') name: string,
-    @Args('description') description: string,
-    @Args('country') country: string,
-    @Args('year') year: number,
+    @Args('createGenreInput') createGenreInput: CreateGenreInput,
     @Context() ctx: IContext,
   ) {
     const { config } = ctx;
-    return this.genresService.create(name, description, country, year, config);
+    return this.genresService.create(createGenreInput, config);
   }
 
   @Query('genres')
@@ -34,21 +32,11 @@ export class GenresResolver {
   @Mutation('updateGenre')
   update(
     @Args('id') id: string,
-    @Args('name') name: string,
-    @Args('description') description: string,
-    @Args('country') country: string,
-    @Args('year') year: number,
+    @Args('updateGenreInput') updateGenreInput: UpdateGenreInput,
     @Context() ctx: IContext,
   ) {
     const { config } = ctx;
-    return this.genresService.update(
-      id,
-      name,
-      description,
-      country,
-      year,
-      config,
-    );
+    return this.genresService.update(id, updateGenreInput, config);
   }
 
   @Mutation('deleteGenre')

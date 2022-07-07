@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
+import { CreateGenreInput, UpdateGenreInput } from 'src/graphql';
 import { IContext } from 'src/types';
 
 @Injectable()
@@ -8,7 +9,8 @@ export class GenresService {
 
   constructor() {
     this.client = axios.create({
-      baseURL: 'http://localhost:3001/v1/genres',
+      baseURL:
+        'https://rolling-scopes-school-node-graphql-service-4jgwg5jx92j7v9-3001.githubpreview.dev/v1/genres',
     });
 
     this.client.interceptors.response.use((res) => {
@@ -17,24 +19,8 @@ export class GenresService {
     });
   }
 
-  async create(
-    name: string,
-    description: string,
-    country: string,
-    year: number,
-    config: IContext['config'],
-  ) {
-    const res = await this.client.post(
-      '/',
-      {
-        name,
-        description,
-        country,
-        year,
-      },
-      config,
-    );
-
+  async create(createGenreInput: CreateGenreInput, config: IContext['config']) {
+    const res = await this.client.post('/', createGenreInput, config);
     return res.data;
   }
 
@@ -43,7 +29,7 @@ export class GenresService {
       params: { limit, offset },
     });
 
-    return res.data;
+    return res.data.items;
   }
 
   async findOne(id: string) {
@@ -53,23 +39,10 @@ export class GenresService {
 
   async update(
     id: string,
-    name: string,
-    description: string,
-    country: string,
-    year: number,
+    updateGenreInput: UpdateGenreInput,
     config: IContext['config'],
   ) {
-    const res = await this.client.put(
-      `/${id}`,
-      {
-        name,
-        description,
-        country,
-        year,
-      },
-      config,
-    );
-
+    const res = await this.client.put(`/${id}`, updateGenreInput, config);
     return res.data;
   }
 

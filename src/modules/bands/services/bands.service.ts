@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
+import { CreateBandInput, UpdateBandInput } from 'src/graphql';
 import { IContext } from 'src/types';
 
 @Injectable()
@@ -8,7 +9,8 @@ export class BandsService {
 
   constructor() {
     this.client = axios.create({
-      baseURL: 'http://localhost:3003/v1/bands',
+      baseURL:
+        'https://rolling-scopes-school-node-graphql-service-4jgwg5jx92j7v9-3003.githubpreview.dev/v1/bands',
     });
 
     this.client.interceptors.response.use((res) => {
@@ -17,20 +19,8 @@ export class BandsService {
     });
   }
 
-  async create(
-    name: string,
-    origin: string,
-    members: any[],
-    website: string,
-    genresIds: string[],
-    config: IContext['config'],
-  ) {
-    const res = await this.client.post(
-      '/',
-      { name, origin, members, website, genresIds },
-      config,
-    );
-
+  async create(createBandInput: CreateBandInput, config: IContext['config']) {
+    const res = await this.client.post('/', createBandInput, config);
     return res.data;
   }
 
@@ -38,6 +28,7 @@ export class BandsService {
     const res = await this.client.get('/', {
       params: { limit, offset },
     });
+
     return res.data.items;
   }
 
@@ -48,18 +39,10 @@ export class BandsService {
 
   async update(
     id: string,
-    name: string,
-    origin: string,
-    members: any[],
-    website: string,
-    genresIds: string[],
+    updateBandInput: UpdateBandInput,
     config: IContext['config'],
   ) {
-    const res = await this.client.put(
-      `/${id}`,
-      { name, origin, members, website, genresIds },
-      config,
-    );
+    const res = await this.client.put(`/${id}`, updateBandInput, config);
     return res.data;
   }
 

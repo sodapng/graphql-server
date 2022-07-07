@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
+import { CreateArtistInput, UpdateArtistInput } from 'src/graphql';
 import { IContext } from 'src/types';
 
 @Injectable()
@@ -8,7 +9,8 @@ export class ArtistsService {
 
   constructor() {
     this.client = axios.create({
-      baseURL: 'https://localhost:3002/v1/artists',
+      baseURL:
+        'https://rolling-scopes-school-node-graphql-service-4jgwg5jx92j7v9-3002.githubpreview.dev/v1/artists',
     });
 
     this.client.interceptors.response.use((res) => {
@@ -18,31 +20,10 @@ export class ArtistsService {
   }
 
   async create(
-    firstName: string,
-    secondName: string,
-    middleName: string,
-    birthDate: string,
-    birthPlace: string,
-    country: string,
-    bands: string[],
-    instruments: string[],
+    createArtistInput: CreateArtistInput,
     config: IContext['config'],
   ) {
-    const res = await this.client.post(
-      '/',
-      {
-        firstName,
-        secondName,
-        middleName,
-        birthDate,
-        birthPlace,
-        country,
-        bands,
-        instruments,
-      },
-      config,
-    );
-
+    const res = await this.client.post('/', createArtistInput, config);
     return res.data;
   }
 
@@ -61,31 +42,10 @@ export class ArtistsService {
 
   async update(
     id: string,
-    firstName: string,
-    secondName: string,
-    middleName: string,
-    birthDate: string,
-    birthPlace: string,
-    country: string,
-    bands: string[],
-    instruments: string[],
+    updateArtistInput: UpdateArtistInput,
     config: IContext['config'],
   ) {
-    const res = await this.client.put(
-      `/${id}`,
-      {
-        firstName,
-        secondName,
-        middleName,
-        birthDate,
-        birthPlace,
-        country,
-        bands,
-        instruments,
-      },
-      config,
-    );
-
+    const res = await this.client.put(`/${id}`, updateArtistInput, config);
     return res.data;
   }
 

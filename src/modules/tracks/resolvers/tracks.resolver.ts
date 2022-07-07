@@ -1,32 +1,11 @@
-import {
-  Resolver,
-  Query,
-  Mutation,
-  Args,
-  Context,
-  ResolveField,
-  Parent,
-} from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
 import { CreateTrackInput, UpdateTrackInput } from 'src/graphql';
-import { BandsService } from 'src/modules/bands/services/bands.service';
-import { GenresService } from 'src/modules/genres/services/genres.service';
 import { IContext } from 'src/types';
 import { TracksService } from '../services/tracks.service';
 
 @Resolver('Track')
 export class TracksResolver {
-  constructor(
-    private readonly tracksService: TracksService,
-    private bandsService: BandsService,
-    private genresService: GenresService,
-  ) {}
-
-  @ResolveField('bands')
-  async posts(@Parent() author) {
-    console.log(author);
-    // const { id } = author;
-    // return this.bandsService.findOne(id);
-  }
+  constructor(private readonly tracksService: TracksService) {}
 
   @Mutation('createTrack')
   create(
