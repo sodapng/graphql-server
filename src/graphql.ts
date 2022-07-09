@@ -129,6 +129,8 @@ export abstract class IQuery {
 
     abstract band(id: string): Nullable<Band> | Promise<Nullable<Band>>;
 
+    abstract favourites(): Favourites | Promise<Favourites>;
+
     abstract genres(limit?: Nullable<number>, offset?: Nullable<number>): Nullable<Nullable<Genre>[]> | Promise<Nullable<Nullable<Genre>[]>>;
 
     abstract genre(id: string): Nullable<Genre> | Promise<Nullable<Genre>>;
@@ -160,6 +162,22 @@ export abstract class IMutation {
     abstract updateBand(id: string, updateBandInput?: Nullable<UpdateBandInput>): Band | Promise<Band>;
 
     abstract deleteBand(id: string): Nullable<Delete> | Promise<Nullable<Delete>>;
+
+    abstract addTrackToFavourites(id?: Nullable<string>): Favourites | Promise<Favourites>;
+
+    abstract addBandToFavourites(id?: Nullable<string>): Favourites | Promise<Favourites>;
+
+    abstract addArtistToFavourites(id?: Nullable<string>): Favourites | Promise<Favourites>;
+
+    abstract addGenreToFavourites(id?: Nullable<string>): Favourites | Promise<Favourites>;
+
+    abstract removeTrackToFavourites(id?: Nullable<string>): Favourites | Promise<Favourites>;
+
+    abstract removeBandToFavourites(id?: Nullable<string>): Favourites | Promise<Favourites>;
+
+    abstract removeArtistToFavourites(id?: Nullable<string>): Favourites | Promise<Favourites>;
+
+    abstract removeGenreToFavourites(id?: Nullable<string>): Favourites | Promise<Favourites>;
 
     abstract createGenre(createGenreInput: CreateGenreInput): Genre | Promise<Genre>;
 
@@ -201,6 +219,15 @@ export class Member {
     artist?: Nullable<string>;
     instrument?: Nullable<string>;
     years?: Nullable<string>;
+}
+
+export class Favourites {
+    id: string;
+    userId?: Nullable<string>;
+    bands?: Nullable<Nullable<Band>[]>;
+    genres?: Nullable<Nullable<Genre>[]>;
+    artists?: Nullable<Nullable<Artist>[]>;
+    tracks?: Nullable<Nullable<Track>[]>;
 }
 
 export class Genre {

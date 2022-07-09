@@ -47,8 +47,12 @@ export class ArtistsService {
 
   async findOne(id: string) {
     if (!id) return null;
-    const res = await this.client.get(`/${id}`);
-    return res.data;
+    try {
+      const res = await this.client.get(`/${id}`);
+      return res.data;
+    } catch (err) {
+      return null;
+    }
   }
 
   async update(
