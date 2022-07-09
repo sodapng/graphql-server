@@ -52,7 +52,7 @@ export class UpdateArtistInput {
 export class MemberInput {
     artist?: Nullable<string>;
     instrument?: Nullable<string>;
-    years?: Nullable<string>;
+    years?: Nullable<Nullable<string>[]>;
 }
 
 export class CreateBandInput {
@@ -216,9 +216,9 @@ export class Band {
 }
 
 export class Member {
-    artist?: Nullable<string>;
+    artist?: Nullable<Artist>;
     instrument?: Nullable<string>;
-    years?: Nullable<string>;
+    years?: Nullable<Nullable<string>[]>;
 }
 
 export class Favourites {

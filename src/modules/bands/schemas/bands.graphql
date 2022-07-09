@@ -8,15 +8,15 @@ type Band {
 }
 
 type Member {
-  artist: String
+  artist: Artist
   instrument: String
-  years: String
+  years: [String]
 }
 
 input MemberInput {
-  artist: String
+  artist: ID
   instrument: String
-  years: String
+  years: [String]
 }
 
 input CreateBandInput {

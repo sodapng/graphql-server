@@ -8,6 +8,7 @@ import {
   Parent,
 } from '@nestjs/graphql';
 import { Band, CreateBandInput, UpdateBandInput } from 'src/graphql';
+import { ArtistsService } from 'src/modules/artists/services/artists.service';
 import { GenresService } from 'src/modules/genres/services/genres.service';
 import { IContext } from 'src/types';
 import { BandsService } from '../services/bands.service';
@@ -17,6 +18,7 @@ export class BandsResolver {
   constructor(
     private readonly bandsService: BandsService,
     private readonly genresService: GenresService,
+    private readonly artistsService: ArtistsService,
   ) {}
 
   @Resolver()
@@ -26,12 +28,28 @@ export class BandsResolver {
     return genresIds.map((genreId) => this.genresService.findOne(genreId));
   }
 
+  @Resolver()
+  @ResolveField()
+  async members(@Parent() band: CreateBandInput) {
+    const { members } = band;
+    return members
+      .map((member) => this.artistsService.findOne(member.artist))
+      .map((artist, idx) => {
+        return {
+          artist,
+          instrument: members[idx].instrument,
+          years: members[idx].years,
+        };
+      });
+  }
+
   @Mutation('createBand')
   create(
     @Args('createBandInput') createBandInput: CreateBandInput,
     @Context() ctx: IContext,
   ) {
     const { config } = ctx;
+    console.log(createBandInput);
     return this.bandsService.create(createBandInput, config);
   }
 
