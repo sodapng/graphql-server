@@ -9,8 +9,7 @@ export class GenresService {
 
   constructor() {
     this.client = axios.create({
-      baseURL:
-        'https://3001-rollingscop-nodegraphql-h8zzqdszd90.ws-eu53.gitpod.io/v1/genres',
+      baseURL: 'http://localhost:3001/v1/genres',
     });
 
     this.client.interceptors.response.use((res) => {

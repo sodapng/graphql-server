@@ -9,8 +9,7 @@ export class ArtistsService {
 
   constructor() {
     this.client = axios.create({
-      baseURL:
-        'https://3002-rollingscop-nodegraphql-h8zzqdszd90.ws-eu53.gitpod.io/v1/artists',
+      baseURL: 'http://localhost:3002/v1/artists',
     });
 
     this.client.interceptors.response.use((res) => {

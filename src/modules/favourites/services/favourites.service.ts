@@ -8,8 +8,7 @@ export class FavouritesService {
 
   constructor() {
     this.client = axios.create({
-      baseURL:
-        'https://3007-rollingscop-nodegraphql-h8zzqdszd90.ws-eu53.gitpod.io/v1/favourites',
+      baseURL: 'http://localhost:3007/v1/favourites',
     });
 
     this.client.interceptors.response.use((res) => {

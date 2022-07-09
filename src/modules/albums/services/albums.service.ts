@@ -9,8 +9,7 @@ export class AlbumsService {
 
   constructor() {
     this.client = axios.create({
-      baseURL:
-        'https://3005-rollingscop-nodegraphql-h8zzqdszd90.ws-eu53.gitpod.io/v1/albums',
+      baseURL: 'http://localhost:3005/v1/albums',
     });
 
     this.client.interceptors.response.use((res) => {

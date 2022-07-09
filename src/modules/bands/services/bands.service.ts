@@ -9,8 +9,7 @@ export class BandsService {
 
   constructor() {
     this.client = axios.create({
-      baseURL:
-        'https://3003-rollingscop-nodegraphql-h8zzqdszd90.ws-eu53.gitpod.io/v1/bands',
+      baseURL: 'http://localhost:3003/v1/bands',
     });
 
     this.client.interceptors.response.use((res) => {

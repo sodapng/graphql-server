@@ -7,8 +7,7 @@ export class UsersService {
 
   constructor() {
     this.client = axios.create({
-      baseURL:
-        'https://3004-rollingscop-nodegraphql-h8zzqdszd90.ws-eu53.gitpod.io/v1/users',
+      baseURL: 'http://localhost:3004/v1/users',
     });
   }
 

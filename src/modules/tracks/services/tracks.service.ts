@@ -9,8 +9,7 @@ export class TracksService {
 
   constructor() {
     this.client = axios.create({
-      baseURL:
-        'https://3006-rollingscop-nodegraphql-h8zzqdszd90.ws-eu53.gitpod.io/v1/tracks',
+      baseURL: 'http://localhost:3006/v1/tracks',
     });
 
     this.client.interceptors.response.use((res) => {
