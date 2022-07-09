@@ -32,15 +32,14 @@ export class BandsResolver {
   @ResolveField()
   async members(@Parent() band: CreateBandInput) {
     const { members } = band;
+
     return members
       .map((member) => this.artistsService.findOne(member.artist))
-      .map((artist, idx) => {
-        return {
-          artist,
-          instrument: members[idx].instrument,
-          years: members[idx].years,
-        };
-      });
+      .map((artist, idx) => ({
+        artist,
+        instrument: members[idx].instrument,
+        years: members[idx].years,
+      }));
   }
 
   @Mutation('createBand')
@@ -49,7 +48,6 @@ export class BandsResolver {
     @Context() ctx: IContext,
   ) {
     const { config } = ctx;
-    console.log(createBandInput);
     return this.bandsService.create(createBandInput, config);
   }
 
