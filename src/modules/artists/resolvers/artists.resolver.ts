@@ -1,11 +1,30 @@
-import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
-import { CreateArtistInput, UpdateArtistInput } from 'src/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Context,
+  Parent,
+  ResolveField,
+} from '@nestjs/graphql';
+import { Artist, CreateArtistInput, UpdateArtistInput } from 'src/graphql';
+import { BandsService } from 'src/modules/bands/services/bands.service';
 import { IContext } from 'src/types';
 import { ArtistsService } from '../services/artists.service';
 
 @Resolver('Artist')
 export class ArtistsResolver {
-  constructor(private readonly artistsService: ArtistsService) {}
+  constructor(
+    private readonly artistsService: ArtistsService,
+    private readonly bandsService: BandsService,
+  ) {}
+
+  @Resolver()
+  @ResolveField()
+  async bands(@Parent() artist: Artist & { bandsIds: string[] }) {
+    const { bandsIds } = artist;
+    return bandsIds.map((bandId) => this.bandsService.findOne(bandId));
+  }
 
   @Mutation('createArtist')
   create(

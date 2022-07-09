@@ -1,7 +1,7 @@
 type Track {
   id: ID!
   title: String!
-  album: String
+  album: Album
   artists: [Artist]
   bands: [Band]
   duration: Int
@@ -11,22 +11,22 @@ type Track {
 
 input CreateTrackInput {
   title: String!
-  album: ID
-  artists: [ID]
-  bands: [ID]
+  albumId: ID
+  artistsIds: [ID]
+  bandsIds: [ID]
   duration: Int
   released: Int
-  genres: [ID]
+  genresIds: [ID]
 }
 
 input UpdateTrackInput {
   title: String!
-  album: ID
-  artists: [ID]
-  bands: [ID]
+  albumId: ID
+  artistsIds: [ID]
+  bandsIds: [ID]
   duration: Int
   released: Int
-  genres: [ID]
+  genresIds: [ID]
 }
 
 type Query {

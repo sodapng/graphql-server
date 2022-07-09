@@ -8,7 +8,7 @@ export class UsersService {
   constructor() {
     this.client = axios.create({
       baseURL:
-        'https://rolling-scopes-school-node-graphql-service-4jgwg5jx92j7v9-3004.githubpreview.dev/v1/users',
+        'https://3004-rollingscop-nodegraphql-h8zzqdszd90.ws-eu53.gitpod.io/v1/users',
     });
   }
 

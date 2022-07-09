@@ -7,7 +7,7 @@ import { GenresModule } from './modules/genres/genres.module';
 import { BandsModule } from './modules/bands/bands.module';
 import { ArtistsModule } from './modules/artists/artists.module';
 import { TracksModule } from './modules/tracks/tracks.module';
-import axios from 'axios';
+import { AlbumsModule } from './modules/albums/albums.module';
 
 @Module({
   imports: [
@@ -35,6 +35,7 @@ import axios from 'axios';
     BandsModule,
     ArtistsModule,
     TracksModule,
+    AlbumsModule,
   ],
 })
 export class AppModule {}

@@ -8,17 +8,22 @@ import {
   Parent,
 } from '@nestjs/graphql';
 import { Band, CreateBandInput, UpdateBandInput } from 'src/graphql';
+import { GenresService } from 'src/modules/genres/services/genres.service';
 import { IContext } from 'src/types';
 import { BandsService } from '../services/bands.service';
 
 @Resolver('Band')
 export class BandsResolver {
-  constructor(private readonly bandsService: BandsService) {}
+  constructor(
+    private readonly bandsService: BandsService,
+    private readonly genresService: GenresService,
+  ) {}
 
   @Resolver()
   @ResolveField()
-  async genres(@Parent() band: Band) {
-    console.log(band);
+  async genres(@Parent() band: Band & { genresIds: string[] }) {
+    const { genresIds } = band;
+    return genresIds.map((genreId) => this.genresService.findOne(genreId));
   }
 
   @Mutation('createBand')

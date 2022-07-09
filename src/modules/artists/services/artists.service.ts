@@ -10,11 +10,21 @@ export class ArtistsService {
   constructor() {
     this.client = axios.create({
       baseURL:
-        'https://rolling-scopes-school-node-graphql-service-4jgwg5jx92j7v9-3002.githubpreview.dev/v1/artists',
+        'https://3002-rollingscop-nodegraphql-h8zzqdszd90.ws-eu53.gitpod.io/v1/artists',
     });
 
     this.client.interceptors.response.use((res) => {
-      res.data.items = res.data.items?.map((el) => ({ ...el, id: el._id }));
+      if (!res.data) {
+        res.data = null;
+        return res;
+      }
+
+      if (res.data.items) {
+        res.data.items = res.data.items.map((el) => ({ ...el, id: el._id }));
+      } else {
+        res.data = { ...res.data, id: res.data._id };
+      }
+
       return res;
     });
   }
@@ -36,6 +46,7 @@ export class ArtistsService {
   }
 
   async findOne(id: string) {
+    if (!id) return null;
     const res = await this.client.get(`/${id}`);
     return res.data;
   }

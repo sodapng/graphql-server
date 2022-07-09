@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
-import { CreateTrackInput, UpdateTrackInput } from 'src/graphql';
+import { CreateAlbumInput, UpdateAlbumInput } from 'src/graphql';
 import { IContext } from 'src/types';
 
 @Injectable()
-export class TracksService {
+export class AlbumsService {
   client: AxiosInstance;
 
   constructor() {
     this.client = axios.create({
       baseURL:
-        'https://3006-rollingscop-nodegraphql-h8zzqdszd90.ws-eu53.gitpod.io/v1/tracks',
+        'https://3005-rollingscop-nodegraphql-h8zzqdszd90.ws-eu53.gitpod.io/v1/albums',
     });
 
     this.client.interceptors.response.use((res) => {
@@ -29,8 +29,8 @@ export class TracksService {
     });
   }
 
-  async create(createTrackInput: CreateTrackInput, config: IContext['config']) {
-    const res = await this.client.post('/', createTrackInput, config);
+  async create(CreateAlbumInput: CreateAlbumInput, config: IContext['config']) {
+    const res = await this.client.post('/', CreateAlbumInput, config);
     return res.data;
   }
 
@@ -50,10 +50,10 @@ export class TracksService {
 
   async update(
     id: string,
-    updateTrackInput: UpdateTrackInput,
+    UpdateAlbumInput: UpdateAlbumInput,
     config: IContext['config'],
   ) {
-    const res = await this.client.put(`/${id}`, updateTrackInput, config);
+    const res = await this.client.put(`/${id}`, UpdateAlbumInput, config);
     return res.data;
   }
 
